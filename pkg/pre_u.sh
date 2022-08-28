@@ -10,6 +10,7 @@ PATH=$PATH:/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin
 SCRIPT_PATH=$(cd `dirname "${BASH_SOURCE[0]}"` && pwd)
 
 _USER=redis-exporter
+_SERVICE=redis_exporter
 BINARY_DEST=/usr/local/bin/redis_exporter
 
 # Checking exists
@@ -22,6 +23,6 @@ service_exists() {
     fi
 }
 
-if service_exists "$_USER"; then
-    systemctl stop "$_USER".service
+if service_exists "$_SERVICE"; then
+    systemctl stop "$_SERVICE".service
 fi

@@ -10,12 +10,12 @@ PATH=$PATH:/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin
 SCRIPT_PATH=$(cd `dirname "${BASH_SOURCE[0]}"` && pwd)
 
 _USER=redis-exporter
+_SERVICE=redis_exporter
 BINARY_DEST=/usr/local/bin/redis_exporter
 
-# Checking exists
-service_exists() {
+service_active() {
     local n=$1
-    if [[ $(systemctl list-units --all -t service --full --no-legend "$n.service" | sed 's/^\s*//g' | cut -f1 -d' ') == $n.service ]]; then
+    if [[ $(systemctl list-units --type=service --state=active | grep $n.service | sed 's/^\s*//g' | cut -f1 -d' ') == $n.service ]]; then
         return 0
     else
         return 1
@@ -24,13 +24,15 @@ service_exists() {
 
 # Checking Redis user exists
 if ! id -u "$_USER" >/dev/null 2>&1; then
-    useradd -s /sbin/nologin -c "Redis Exporter User" -d /var/lib/redis -r -M ${_USER}
+    useradd -s /sbin/nologin -c "Redis Exporter User" -d /var/lib/redis-exporter -r -M ${_USER}
 fi
 
 # Final steps
 chown -R -L ${_USER}:${_USER} ${BINARY_DEST}
 systemctl --system daemon-reload
 
-if service_exists "$_USER"; then
-    systemctl enable --now redis_exporter
+systemctl enable --now $_SERVICE.service
+
+if ! service_active "$_SERVICE"; then
+    systemctl start $_SERVICE.service
 fi
