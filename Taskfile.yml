@@ -1,0 +1,30 @@
+version: '3'
+
+vars:
+  PKGS: pkgs
+  BINARY_NAME: redis_exporter
+  BINARY_PATH: ./pkg/{{.BINARY_NAME}}
+  VERSION: 1.44.2
+  ITERATION: 1
+  PRE_UNINSTALL: ./pkg/pre_u.sh
+  POST_UNINSTALL: ./pkg/post_u.sh
+  AFTER: ./pkg/after.sh
+  VENDOR: "S-A Lab"
+  URL: "https://lab.sys-adm.in"
+  DESK: "Redis Exporter"
+
+tasks:
+  build-all:
+    cmds:
+      - task: rpm-build
+      - task: deb-build
+
+  rpm-build:
+    cmds:
+      - ./build.sh
+      - fpm -s dir -t rpm --name {{.BINARY_NAME}} --version {{.VERSION}} --iteration 1 -a x86_64 -f --prefix=/ --template-scripts --rpm-os linux --provides {{.BINARY_NAME}} --vendor "{{.VENDOR}}" --url {{.URL}} --description "{{.DESK}}" --after-install {{.AFTER}} --pre-uninstall {{.PRE_UNINSTALL}} --post-uninstall {{.POST_UNINSTALL}} -p {{.PKGS}} pkg/{{.BINARY_NAME}}=/usr/local/bin/ pkg/{{.BINARY_NAME}}.template=/usr/lib/systemd/system/{{.BINARY_NAME}}.services
+
+  deb-build:
+    cmds:
+      - ./build.sh
+      - fpm -s dir -t deb --name {{.BINARY_NAME}} --version {{.VERSION}} --iteration 1 -a x86_64 -f --prefix=/ --template-scripts --rpm-os linux --provides {{.BINARY_NAME}} --vendor "{{.VENDOR}}" --url {{.URL}} --description "{{.DESK}}" --after-install {{.AFTER}} --pre-uninstall {{.PRE_UNINSTALL}} --post-uninstall {{.POST_UNINSTALL}} -p {{.PKGS}} pkg/{{.BINARY_NAME}}=/usr/local/bin/ pkg/{{.BINARY_NAME}}.template=/usr/lib/systemd/system/{{.BINARY_NAME}}.services
