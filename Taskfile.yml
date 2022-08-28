@@ -22,9 +22,9 @@ tasks:
   rpm-build:
     cmds:
       - ./build.sh
-      - fpm -s dir -t rpm --name {{.BINARY_NAME}} --version {{.VERSION}} --iteration 1 -a x86_64 -f --prefix=/ --template-scripts --rpm-os linux --provides {{.BINARY_NAME}} --vendor "{{.VENDOR}}" --url {{.URL}} --description "{{.DESK}}" --after-install {{.AFTER}} --pre-uninstall {{.PRE_UNINSTALL}} --post-uninstall {{.POST_UNINSTALL}} -p {{.PKGS}} pkg/{{.BINARY_NAME}}=/usr/local/bin/ pkg/{{.BINARY_NAME}}.template=/usr/lib/systemd/system/{{.BINARY_NAME}}.services
+      - fpm -s dir -t rpm --name {{.BINARY_NAME}} --version {{.VERSION}} --iteration 1 -a x86_64 -f --prefix=/ --template-scripts --rpm-os linux --provides {{.BINARY_NAME}} --vendor "{{.VENDOR}}" --url {{.URL}} --description "{{.DESK}}" --after-install {{.AFTER}} --pre-uninstall {{.PRE_UNINSTALL}} --post-uninstall {{.POST_UNINSTALL}} -p {{.PKGS}} pkg/{{.BINARY_NAME}}=/usr/local/bin/ pkg/{{.BINARY_NAME}}.template=/usr/lib/systemd/system/{{.BINARY_NAME}}.service
 
   deb-build:
     cmds:
       - ./build.sh
-      - fpm -s dir -t deb --name {{.BINARY_NAME}} --version {{.VERSION}} --iteration 1 -a x86_64 -f --prefix=/ --template-scripts --rpm-os linux --provides {{.BINARY_NAME}} --vendor "{{.VENDOR}}" --url {{.URL}} --description "{{.DESK}}" --after-install {{.AFTER}} --pre-uninstall {{.PRE_UNINSTALL}} --post-uninstall {{.POST_UNINSTALL}} -p {{.PKGS}} pkg/{{.BINARY_NAME}}=/usr/local/bin/ pkg/{{.BINARY_NAME}}.template=/usr/lib/systemd/system/{{.BINARY_NAME}}.services
+      - fpm -s dir -t deb --name {{.BINARY_NAME}} --version {{.VERSION}} --iteration 1 -a x86_64 -f --prefix=/ --template-scripts --rpm-os linux --provides {{.BINARY_NAME}} --vendor "{{.VENDOR}}" --url {{.URL}} --description "{{.DESK}}" --after-install {{.AFTER}} --pre-uninstall {{.PRE_UNINSTALL}} --post-uninstall {{.POST_UNINSTALL}} -p {{.PKGS}} pkg/{{.BINARY_NAME}}=/usr/local/bin/ pkg/{{.BINARY_NAME}}.template=/usr/lib/systemd/system/{{.BINARY_NAME}}.service
