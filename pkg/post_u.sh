@@ -2,6 +2,8 @@
 # Post_u
 # Created by Y.G., https://sys-adm.in
 
+set -e
+
 # Envs
 # ---------------------------------------------------\
 PATH=$PATH:/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin
