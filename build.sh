@@ -16,6 +16,7 @@ BIN_VER=1.44.2
 GIT_HASH=$(git rev-parse --short HEAD)
 PACKAGES='rpm deb'
 PACKAGES_PATH="$SCRIPT_PATH/pkgs"
+PACKAGE_NAME="redis-exporter"
 AFTER="$SCRIPT_PATH/pkg/after.sh"
 PRE_U="$SCRIPT_PATH/pkg/pre_u.sh"
 POST_U="$SCRIPT_PATH/pkg/post_u.sh"
@@ -30,7 +31,7 @@ getDate() {
 ifFpm() {
     
     for i in ${PACKAGES}; do
-         fpm -s dir -t "$i" --name "$BIN_NAME" --version "$BIN_VER" \
+         fpm -s dir -t "$i" --name "$PACKAGE_NAME" --version "$BIN_VER" \
          --iteration 1 -a x86_64 -f --prefix=/ --template-scripts --rpm-os linux --provides "$BIN_NAME" \
          --vendor "S-A Lab" --url "https://lab.sys-adm.in" --description "Redis Exporter" \
          --after-install ${AFTER} --pre-uninstall ${PRE_U} --post-uninstall ${POST_U} \
