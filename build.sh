@@ -20,14 +20,13 @@ AFTER="$SCRIPT_PATH/pkg/after.sh"
 PRE_U="$SCRIPT_PATH/pkg/pre_u.sh"
 POST_U="$SCRIPT_PATH/pkg/post_u.sh"
 
-
-
-# Acts
+# Funcs
 # ---------------------------------------------------\
 getDate() {
     date '+%d-%m-%Y_%H-%M-%S'
 }
 
+# Gen fpm packages
 ifFpm() {
     
     for i in ${PACKAGES}; do
@@ -39,6 +38,7 @@ ifFpm() {
     done
 }
 
+# Gen binaries
 makeBin() {
 
     echo -e "\nBuilding: - $BIN_PATH"
@@ -58,7 +58,8 @@ makeBin() {
         ifFpm
     fi
 
-
 }
 
+# Acts
+# ---------------------------------------------------\
 makeBin
