@@ -24,9 +24,7 @@ tasks:
     cmds:
       - ./build.sh
       - fpm -s dir -t rpm --name {{.PACKAGE_NAME}} --version {{.VERSION}} --iteration 1 -a x86_64 -f --prefix=/ --template-scripts --rpm-os linux --provides {{.BINARY_NAME}} --vendor "{{.VENDOR}}" --url {{.URL}} --description "{{.DESK}}" --after-install {{.AFTER}} --before-remove {{.PRE_UNINSTALL}} --after-remove {{.POST_UNINSTALL}} -p {{.PKGS}} pkg/{{.BINARY_NAME}}=/usr/local/bin/ pkg/{{.BINARY_NAME}}.template=/usr/lib/systemd/system/{{.BINARY_NAME}}.service
-    generates:
-      - ./pkgs/{{.BINARY_NAME}}*
-
+      
   deb-build:
     cmds:
       - ./build.sh
