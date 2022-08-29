@@ -15,6 +15,7 @@ SCRIPT_PATH=$(cd `dirname "${BASH_SOURCE[0]}"` && pwd)
 # ---------------------------------------------------\
 _USER=redis-exporter
 _SERVICE=redis_exporter
+_REDIS_USER=redis
 BINARY_DEST=/usr/local/bin/redis_exporter
 
 # Funcs
@@ -31,9 +32,17 @@ service_active() {
 # Acts
 # ---------------------------------------------------\
 # Checking Redis user exists
-if ! id -u "$_USER" >/dev/null 2>&1; then
-    useradd -s /sbin/nologin -c "Redis Exporter User" -d /var/lib/redis-exporter -r -M ${_USER}
-fi
+# if ! id -u "$_USER" >/dev/null 2>&1; then
+#     useradd -s /sbin/nologin -c "Redis Exporter User" -d /var/lib/redis-exporter -r -M ${_USER}
+
+#     if id -u "$_REDIS_USER" >/dev/null 2>&1; then
+#         usermod -a -G ${_REDIS_USER} ${_USER}
+#     fi
+# fi
+
+id -u redis-exporter &> /dev/null || /usr/sbin/useradd -s /sbin/nologin -r -M redis-exporter
+getent group redis &> /dev/null && usermod -a -G redis redis-exporter
+
 
 # Final steps
 chown -R -L ${_USER}:${_USER} ${BINARY_DEST}

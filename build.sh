@@ -12,7 +12,7 @@ cd $SCRIPT_PATH
 # ---------------------------------------------------\
 BIN_PATH="$SCRIPT_PATH/pkg"
 BIN_NAME="redis_exporter"
-BIN_VER=1.44.2
+BIN_VER=1.44.2.2
 GIT_HASH=$(git rev-parse --short HEAD)
 PACKAGES='rpm deb'
 PACKAGES_PATH="$SCRIPT_PATH/pkgs"

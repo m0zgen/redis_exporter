@@ -10,6 +10,7 @@ Type=simple
 
 ExecStart=/usr/local/bin/redis_exporter \
     -web.listen-address ":9121" \
+    –include-system-metrics \
     -redis.addr "redis://127.0.0.1:6379"
 
 ExecStop=/usr/bin/kill -s TERM ${MAINPID}
