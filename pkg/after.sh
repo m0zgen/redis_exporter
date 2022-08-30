@@ -37,7 +37,6 @@ if ! id -u "$_USER" >/dev/null 2>&1; then
 
     if [[ ! -d "$_SERVICE_HOME" ]]; then
         mkdir -p "$_SERVICE_HOME"
-        chown -R -L ${_USER}:${_USER} ${_SERVICE_HOME}
     fi
     useradd -s /sbin/nologin -c "Redis Exporter User" -d /var/lib/redis-exporter -r -M ${_USER}
     # id -u redis-exporter &> /dev/null || /usr/sbin/useradd -s /sbin/nologin -r -M redis-exporter
@@ -49,6 +48,9 @@ fi
 
 # Final steps
 chown -R -L ${_USER}:${_USER} ${BINARY_DEST}
+sleep 2
+chown -R -L ${_USER}:${_USER} ${_SERVICE_HOME}
+
 systemctl --system daemon-reload
 
 systemctl enable --now $_SERVICE.service
