@@ -34,8 +34,4 @@ if service_active "$_SERVICE"; then
 fi
 
 systemctl --system daemon-reload;
-# getent passwd $_USER > /dev/null 2&>1
 
-# if [ $? -eq 0 ]; then
-#     userdel -f ${_USER}
-# fi
